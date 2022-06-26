@@ -3,6 +3,7 @@ package elektronikverwaltung_projekt;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,9 +20,9 @@ public class Export {
 			String s = "";
 
 			Statement s1 = c.createStatement();
-			String sql = "select kunde, produkt, anzahl, produktname, artikelnummer, preis, vorname, nachname, id, adresse, "
-					+ "plz, anzahl*preis as rechnungsbetrag from bestellen b join produkte p on b.produkt = p.artikelnummer "
-					+ "join kunden k on b.kunde = k.id;";
+			String sql = "select kunde, produkt, anzahl, produktname, artikelnummer, preis, vorname, nachname, id, "
+					+ "adresse, plz, anzahl*preis as rechnungsbetrag, kaufdatum, date_add(kaufdatum, interval 6 month) as garantiebis "
+					+ "from bestellen b join produkte p on b.produkt = p.artikelnummer join kunden k on b.kunde = k.id;";
 			ResultSet rs = s1.executeQuery(sql);
 
 			while (rs.next()) {
@@ -37,9 +38,8 @@ public class Export {
 				String adresse = rs.getString("adresse");
 				String plz = rs.getString("plz");
 				int rechnungsbetrag = rs.getInt("rechnungsbetrag");
-
-				// vorname, nachname, id, adresse, plz, produktname, anzahl, preis,
-				// rechnungsbetrag
+				Date kaufdatum = rs.getDate("kaufdatum");
+				Date garantiebis = rs.getDate("garantiebis");
 
 				json.put("vorname", vorname);
 				json.put("nachname", nachname);
@@ -50,6 +50,9 @@ public class Export {
 				json.put("anzahl", anzahl);
 				json.put("preis", preis);
 				json.put("rechnungsbetrag", rechnungsbetrag);
+				json.put("kaufdatum", kaufdatum);
+				json.put("garantiebis", garantiebis);
+
 				s = s + json;
 			}
 			f.write(s);

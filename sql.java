@@ -98,7 +98,7 @@ public class sql {
 	public static void createbestellen(Connection c) {
 		try {
 			Statement s = c.createStatement();
-			String sql = "create table if not exists bestellen (kunde int, produkt int, anzahl int, "
+			String sql = "create table if not exists bestellen (kunde int, produkt int, anzahl int, kaufdatum date, "
 					+ "foreign key(kunde) references kunden(id) on delete restrict, foreign key (produkt) references produkte(artikelnummer) on delete restrict);";
 			s.executeUpdate(sql);
 			s.close();

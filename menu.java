@@ -13,6 +13,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class menu {
 
@@ -81,6 +83,9 @@ public class menu {
 					int kunde;
 					int produkt;
 					int anzahl;
+					
+					
+					
 					System.out.println();
 					System.out.println("Welcher Kunde bestellt? (id auswählen)");
 					System.out.println("vorname-nachname-id");
